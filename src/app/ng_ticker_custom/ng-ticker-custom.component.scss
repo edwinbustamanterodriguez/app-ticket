@@ -1,0 +1,65 @@
+.ticker-container {
+  width: 100%;
+  text-align: left;
+
+  // hiding scrollbar for ng-ticker
+  overflow: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  // ticker items animation
+  span {
+    white-space: nowrap;
+    position: relative;
+    display: inline-block;
+    animation-iteration-count: infinite;
+    animation-play-state: paused;
+  }
+
+  span {
+    animation-name: tickerX;
+  }
+
+  /* Pause animation on hover */
+  &.stop-on-hover:hover > span {
+    animation-play-state: paused;
+  }
+
+  /* play state */
+  &.play-state-on > span {
+    animation-play-state: running;
+  }
+
+  @-webkit-keyframes tickerX {
+    0% {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+      visibility: visible;
+      left: 100%;
+    }
+
+    100% {
+      -webkit-transform: translate3d(-100%, 0, 0);
+      transform: translate3d(-100%, 0, 0);
+      left: 0%;
+    }
+  }
+
+  @keyframes tickerX {
+    0% {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+      visibility: visible;
+      left: 100%;
+    }
+
+    100% {
+      -webkit-transform: translate3d(-100%, 0, 0);
+      transform: translate3d(-100%, 0, 0);
+      left: 0%;
+    }
+  }
+}

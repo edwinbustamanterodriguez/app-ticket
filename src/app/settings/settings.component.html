@@ -1,0 +1,40 @@
+<div class="main-setting">
+  <div class="settings-custom">
+    <ul>
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }">
+        <a class="nav-link" routerLink="/settings/speed">
+          <span>Speed</span>
+        </a>
+      </li>
+      <li class="nav-item" routerLinkActive="active"[routerLinkActiveOptions]="{ exact: false }">
+        <a class="nav-link" routerLink="/settings/storage">
+          <span>Storage</span>
+        </a>
+      </li>
+      <li class="nav-item" routerLinkActive="active"[routerLinkActiveOptions]="{ exact: false }">
+        <a class="nav-link" routerLink="/settings/scheme">
+          <span>Color Scheme</span>
+        </a>
+      </li>
+      <li class="nav-item" routerLinkActive="active"[routerLinkActiveOptions]="{ exact: false }">
+        <a class="nav-link" routerLink="/settings/other">
+          <span>Others</span>
+        </a>
+      </li>
+    </ul>
+    <div class="settings-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+ <footer class="fixed-bottom footer-actions">
+    <button type="button" class="btn btn-secondary btn-sm" (click)="close()">Close</button>
+    <button type="button" class="btn btn-secondary btn-sm" (click)="save()">Save changes</button>
+ </footer>
+</div>
+
+
+
+
+
+
+

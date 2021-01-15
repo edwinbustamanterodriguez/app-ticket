@@ -1,4 +1,4 @@
-import {app, BrowserWindow, Menu, screen, shell} from 'electron';
+import {app, BrowserWindow, ipcMain, Menu, screen, shell} from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
@@ -6,6 +6,13 @@ let win: BrowserWindow = null;
 let winSettings: BrowserWindow = null;
 const args = process.argv.slice(1),
   serve = args.some(val => val === '--serve');
+
+const openExternalLinksInOSBrowser = (event, url) => {
+  if (url.match(/.*localhost.*/gi) === null && (url.startsWith('http:') || url.startsWith('https:'))) {
+    event.preventDefault();
+    shell.openExternal(url);
+  }
+};
 
 function createWindow(): BrowserWindow {
 
@@ -16,8 +23,11 @@ function createWindow(): BrowserWindow {
   win = new BrowserWindow({
     x: 0,
     y: 0,
-    width: size.width,
-    height: size.height,
+    width: 900,
+    height: 200,
+    minWidth: size.width,
+    minHeight: 100,
+    maxHeight: 150,
     webPreferences: {
       nodeIntegration: true,
       allowRunningInsecureContent: (serve) ? true : false,
@@ -48,6 +58,10 @@ function createWindow(): BrowserWindow {
     win = null;
   });
 
+  //
+  win.webContents.on('new-window', openExternalLinksInOSBrowser);
+  win.webContents.on('will-navigate', openExternalLinksInOSBrowser);
+
   return win;
 }
 
@@ -59,8 +73,11 @@ function createWindowSettings(): BrowserWindow {
   winSettings = new BrowserWindow({
     title: "Settings",
     parent: win,
-    width: 900,
-    height: 350,
+    width: 900, // size.width / 2,
+    height: 200, // size.height / 1.5,
+    minWidth: 800,
+    minHeight: 200,
+    maxHeight: 250,
     center: true,
     resizable: false,
     frame: true,
@@ -76,8 +93,7 @@ function createWindowSettings(): BrowserWindow {
   });
 
   if (serve) {
-    winSettings.webContents.openDevTools();
-
+   // winSettings.webContents.openDevTools();
     require('electron-reload')(__dirname, {
       electron: require(`${__dirname}/node_modules/electron`)
     });
@@ -110,6 +126,12 @@ try {
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
   // Added 400 ms to fix the black background issue while using transparent window. More detais at https://github.com/electron/electron/issues/15947
+  ipcMain.on('close-settings-win', (event, arg) => {
+    win.webContents.send('win-main', arg);
+    winSettings.close();
+    winSettings = null;
+  });
+
   app.on('ready', () => setTimeout(createWindow, 400));
 
   // Quit when all windows are closed.

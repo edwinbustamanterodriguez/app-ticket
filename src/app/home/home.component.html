@@ -1,28 +1,26 @@
-<div class="container">
-  <h1 class="title">
-    {{ 'PAGES.HOME.TITLE' | translate }}
-  </h1>
-  <a routerLink="/detail">{{ 'PAGES.HOME.GO_TO_DETAIL' | translate }}</a>
-  <table class="table table-sm" aria-describedby="page-heading">
-    <thead>
-    <tr class="header-table-custom">
-      <th scope="col"><span>ID</span></th>
-      <th scope="col"><span>Firs Name</span></th>
-      <th scope="col"><span>Last Name</span></th>
-      <th scope="col"><span>Age</span></th>
-    </tr>
-    </thead>
-    <tbody *ngIf="users && users.length>0">
-    <tr *ngFor="let user of users">
-      <td class="settings-global-p">{{user.Id}}</td>
-      <td class="settings-global-p">{{user.FirstName}}</td>
-      <td class="settings-global-p">{{user.LastName}}</td>
-      <td class="settings-global-p">{{user.Age}}</td>
-    </tr>
-    </tbody>
-    <p *ngIf="!users || users.length===0" class="settings-global-p text-center align-content-center">No
-      data exists</p>
-  </table>
+<div class="container-fluid">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-2 col-sm-2" style="color: white; text-align: center">
+        <span class="current-time">
+          {{currentTime | date: 'hh:mm a'}}
+        </span>
+      <br>
+      <div>
+        <span class="alert-red" style="font-size: larger">{{1}}</span>
+        <span class="alert-orange" style="font-size: larger">{{2}}</span>
+        <span class="alert-yellow" style="font-size: larger">{{2}}</span>
+      </div>
+    </div>
 
-  <button (click)="addUser()">ADD USER</button>
+    <div class="col-md-10 col-sm-10" style="color: white">
+      <ng-ticker-custom idOrName="kentik" direction="left" speed="{{speedTicker*2}}s" playState="true"
+                        stopOnHover="false"
+                        (completeIteration)="completeIteration($event)">
+        <div [innerHTML]="tickerText">
+        </div>
+      </ng-ticker-custom>
+    </div>
+    <h2>{{speedTicker}}</h2>
+  </div>
 </div>
+
