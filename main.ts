@@ -23,11 +23,8 @@ function createWindow(): BrowserWindow {
   win = new BrowserWindow({
     x: 0,
     y: 0,
-    width: 900,
-    height: 200,
-    minWidth: size.width,
-    minHeight: 100,
-    maxHeight: 150,
+    width: size.width,
+    height: 100,
     webPreferences: {
       nodeIntegration: true,
       allowRunningInsecureContent: (serve) ? true : false,
@@ -71,7 +68,7 @@ function createWindowSettings(): BrowserWindow {
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
   // Create the browser window.
   winSettings = new BrowserWindow({
-    title: "Settings",
+    title: 'Settings',
     parent: win,
     width: 900, // size.width / 2,
     height: 200, // size.height / 1.5,
@@ -93,7 +90,7 @@ function createWindowSettings(): BrowserWindow {
   });
 
   if (serve) {
-   // winSettings.webContents.openDevTools();
+    // winSettings.webContents.openDevTools();
     require('electron-reload')(__dirname, {
       electron: require(`${__dirname}/node_modules/electron`)
     });
@@ -121,6 +118,7 @@ function createWindowSettings(): BrowserWindow {
   return winSettings;
 }
 
+//MAIN RUN
 try {
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
@@ -157,9 +155,9 @@ try {
 }
 
 
-//SETTING MENUS
+//SETTING MENUS CONFIG
 function createMenuMain() {
-  var menu = Menu.buildFromTemplate([
+  const menu = Menu.buildFromTemplate([
     {
       label: app.name,
       submenu: [
@@ -216,7 +214,7 @@ function createMenuMain() {
 }
 
 function createMenuSetting() {
-  var menu = Menu.buildFromTemplate([
+  const menu = Menu.buildFromTemplate([
     {
       label: app.name,
       submenu: [
@@ -228,3 +226,49 @@ function createMenuSetting() {
   ])
   Menu.setApplicationMenu(menu);
 }
+
+
+// Express Server for Kafka and Socket.io
+//setup
+const express = require('express');
+const appExpress = express();
+const cors = require('cors');
+const server = appExpress.listen(8182);
+const io = require('socket.io')(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST']
+  }
+});
+
+const corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+appExpress.use(cors(corsOptions));
+
+//consumer
+const consumer = require('./consumer');
+
+//to parse the payload
+const bodyParser = require('body-parser')
+appExpress.use(bodyParser.json());       // to support JSON-encoded bodies
+appExpress.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
+
+//to serve images etc
+appExpress.use(express.static('public'));
+
+//to load index.html
+appExpress.get('/', function (req, res, next) {
+  res.sendFile(__dirname + '/public/index.html');
+});
+
+//to handle consume requests
+appExpress.post('/consume', function (req, res, next) {
+  console.log('Kokpit: /consume called \n' + req.body.brokerHost + ':' + req.body.brokerPort, 'kokpitgroup', req.body.topicName);
+  consumer(req.body.brokerHost + ':' + req.body.brokerPort, 'kokpitgroup', req.body.topicName, io);
+});
+
+consumer('development1.utilitytalent.com:9092', 'kokpitgroup', 'clarity-messages', io);
