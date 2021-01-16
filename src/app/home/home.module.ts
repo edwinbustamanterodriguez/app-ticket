@@ -5,7 +5,7 @@ import { HomeRoutingModule } from './home-routing.module';
 
 import { HomeComponent } from './home.component';
 import { SharedModule } from '../shared/shared.module';
-import {NgTickerCustomComponent} from '../ng_ticker_custom/ng-ticker-custom.component';
+import {NgTickerCustomComponent} from '../shared/components/ng_ticker_custom/ng-ticker-custom.component';
 
 @NgModule({
   declarations: [HomeComponent, NgTickerCustomComponent],

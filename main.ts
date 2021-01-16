@@ -4,6 +4,8 @@ import * as url from 'url';
 
 let win: BrowserWindow = null;
 let winSettings: BrowserWindow = null;
+let winGrid: BrowserWindow = null;
+
 const args = process.argv.slice(1),
   serve = args.some(val => val === '--serve');
 
@@ -25,6 +27,8 @@ function createWindow(): BrowserWindow {
     y: 0,
     width: size.width,
     height: 100,
+    resizable: false,
+    movable:true,
     webPreferences: {
       nodeIntegration: true,
       allowRunningInsecureContent: (serve) ? true : false,
@@ -72,9 +76,6 @@ function createWindowSettings(): BrowserWindow {
     parent: win,
     width: 900, // size.width / 2,
     height: 200, // size.height / 1.5,
-    minWidth: 800,
-    minHeight: 200,
-    maxHeight: 250,
     center: true,
     resizable: false,
     frame: true,
@@ -105,8 +106,14 @@ function createWindowSettings(): BrowserWindow {
     }));
   }
   createMenuSetting();
+
   winSettings.once('ready-to-show', () => {
     winSettings.show()
+  });
+
+  //Force persist Title settings
+  winSettings.on('page-title-updated', (evt) => {
+    evt.preventDefault();
   });
 
   // Emitted when the window is closed.
@@ -118,6 +125,63 @@ function createWindowSettings(): BrowserWindow {
   return winSettings;
 }
 
+function createWindowGrid(): BrowserWindow {
+
+  const electronScreen = screen;
+  const size = electronScreen.getPrimaryDisplay().workAreaSize;
+  // Create the browser window.
+  winGrid = new BrowserWindow({
+    title: 'View Grid',
+    parent: win,
+    width: size.width,
+    height: size.height,
+    center: true,
+    resizable: true,
+    frame: true,
+    movable: true,
+    transparent: false,
+    show: false,
+    webPreferences: {
+      nodeIntegration: true,
+      allowRunningInsecureContent: (serve) ? true : false,
+      contextIsolation: false,  // false if you want to run 2e2 test with Spectron
+      enableRemoteModule: true // true if you want to run 2e2 test  with Spectron or use remote module in renderer context (ie. Angular)
+    },
+  });
+
+  if (serve) {
+    require('electron-reload')(__dirname, {
+      electron: require(`${__dirname}/node_modules/electron`)
+    });
+    winGrid.loadURL('http://localhost:4200/#grid');
+
+  } else {
+    winGrid.loadURL(url.format({
+      pathname: path.join(__dirname, 'dist/index.html'),
+      protocol: 'file:',
+      slashes: true,
+      hash: 'grid'
+    }));
+  }
+  createMenuGrid();
+  winGrid.once('ready-to-show', () => {
+    winGrid.show()
+  });
+
+  //Force persist Title settings
+  winGrid.on('page-title-updated', (evt) => {
+    evt.preventDefault();
+  });
+
+  // Emitted when the window is closed.
+  winGrid.on('closed', () => {
+    createMenuMain();
+    winGrid = null;
+  });
+
+  return winGrid;
+}
+
 //MAIN RUN
 try {
   // This method will be called when Electron has finished
@@ -126,8 +190,15 @@ try {
   // Added 400 ms to fix the black background issue while using transparent window. More detais at https://github.com/electron/electron/issues/15947
   ipcMain.on('close-settings-win', (event, arg) => {
     win.webContents.send('win-main', arg);
+    createMenuMain();
     winSettings.close();
     winSettings = null;
+  });
+
+  ipcMain.on('close-grid-win', (event, arg) => {
+    createMenuMain();
+    winGrid.close();
+    winGrid = null;
   });
 
   app.on('ready', () => setTimeout(createWindow, 400));
@@ -172,7 +243,9 @@ function createMenuMain() {
         {
           label: 'View in Grid',
           click: function () {
-
+            if (winGrid === null) {
+              createWindowGrid()
+            }
           },
           accelerator: 'CmdOrCtrl + Shift + G'
         }
@@ -227,6 +300,19 @@ function createMenuSetting() {
   Menu.setApplicationMenu(menu);
 }
 
+function createMenuGrid() {
+  const menu = Menu.buildFromTemplate([
+    {
+      label: app.name,
+      submenu: [
+        {role: 'about'},
+        {type: 'separator'},
+        {role: 'quit'}
+      ]
+    }
+  ])
+  Menu.setApplicationMenu(menu);
+}
 
 // Express Server for Kafka and Socket.io
 //setup

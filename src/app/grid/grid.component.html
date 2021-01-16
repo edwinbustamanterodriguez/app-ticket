@@ -1,0 +1,46 @@
+<div class="main-setting">
+  <div class="table-wrap">
+    <div class="table-responsive" id="items">
+      <table class="table table-sm" aria-describedby="page-heading">
+        <thead>
+        <tr class="header-table-custom">
+          <th scope="col"><span>Logo</span></th>
+          <th scope="col"><span>Source</span></th>
+          <th scope="col"><span>Posted Date Time</span></th>
+          <th scope="col"><span>Header</span></th>
+          <th scope="col"><span>Body</span></th>
+          <th scope="col"><span>Url</span></th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody *ngIf="ticketsList && ticketsList.length>0">
+        <tr *ngFor="let ticket of ticketsList">
+          <td><img src="assets/icons/{{ticket.logo}}" class="provider-icon"></td>
+          <td class="settings-global-p">{{ticket.source }}</td>
+          <td class="settings-global-p">{{ticket.postedDateTime | toDateTimePipe}}</td>
+          <td class="settings-global-p">{{ticket.header}}</td>
+          <td class="settings-global-p">{{ticket.body1}}</td>
+          <td><a href="{{ticket.url}}" target="_blank" class="device-text"><p class="settings-global-p">
+            {{(ticket.url && ticket.url.length > 20) ? (ticket.url | slice:0:20) + '..' : (ticket.url)}}
+          </p></a></td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" class="btn btn-danger btn-sm" (click)="deleteItem(ticket)">
+                <i class="fa fa-trash fa-1x" aria-hidden="true"> </i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+        <p *ngIf="!ticketsList || ticketsList.length===0" class="settings-global-p text-center align-content-center">No
+          data exists</p>
+      </table>
+    </div>
+  </div>
+</div>
+
+<footer class="fixed-bottom footer-actions">
+  <button type="button" class="btn btn-secondary btn-sm" (click)="closeWindow()">Close</button>
+  <button type="button" class="btn btn-secondary btn-sm" (click)="deleteAllData()">Clear data</button>
+</footer>
+

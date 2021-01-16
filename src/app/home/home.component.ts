@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {DatabaseService} from '../data-access/database.service';
+import {DatabaseService} from '../core/data-access/database.service';
 import {SettingService} from '../core/services/setting.service';
-import {Setting} from '../core/model/setting.model';
+import {Setting} from '../shared/model/setting.model';
 import {ElectronService} from '../core/services';
 import {io} from 'socket.io-client';
-import {Ticket} from '../core/model/ticket';
-import {ItemTicket} from '../data-access/entities/item_ticket.entity';
+import {Ticket} from '../shared/model/ticket';
+import {ItemTicket} from '../core/data-access/entities/item_ticket.entity';
 
 @Component({
   selector: 'app-home',
@@ -94,7 +94,8 @@ export class HomeComponent implements OnInit {
     const providerLogo = ticket.logo;
     const url = ticket.url;
     startTag = '<span class="alert-red">'
-    const imageTag = '<img class="provider-icon" src="assets/icons/' + providerLogo + '">';
+
+    const imageTag = '<img class="provider-icon-ticket" src="assets/icons/' + providerLogo + '">';
 
     const anchorTag = '<a href="' + url + '" target="_blank" class="device-text">';
 

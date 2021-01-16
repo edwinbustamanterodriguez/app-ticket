@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Setting} from "../model/setting.model";
+import {Setting} from "../../shared/model/setting.model";
 import {ReplaySubject} from "rxjs";
 
 @Injectable({

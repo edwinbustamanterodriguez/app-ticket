@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SettingService} from "../../core/services/setting.service";
 import {ElectronService} from "../../core/services";
-import {Setting} from "../../core/model/setting.model";
+import {Setting} from "../../shared/model/setting.model";
 import {LabelType, Options} from "@angular-slider/ngx-slider";
 
 @Component({

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {ElectronService} from "../core/services";
 import {SettingService} from "../core/services/setting.service";
-import {Setting} from "../core/model/setting.model";
+import {Setting} from "../shared/model/setting.model";
 
 @Component({
   selector: 'app-settings',
