@@ -33,7 +33,6 @@ module.exports = {
   externals: {
     typeorm: "require('typeorm')",
     sqlite3: "require('sqlite3')",
-
   },
   /*resolve: {
     alias: {

@@ -1,4 +1,4 @@
-import {app, BrowserWindow, ipcMain, Menu, screen, shell} from 'electron';
+import {app, BrowserWindow, dialog, ipcMain, Menu, screen, shell} from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
@@ -28,7 +28,7 @@ function createWindow(): BrowserWindow {
     width: size.width,
     height: 100,
     resizable: false,
-    movable:true,
+    movable: true,
     webPreferences: {
       nodeIntegration: true,
       allowRunningInsecureContent: (serve) ? true : false,
@@ -150,6 +150,7 @@ function createWindowGrid(): BrowserWindow {
   });
 
   if (serve) {
+    winGrid.webContents.openDevTools();
     require('electron-reload')(__dirname, {
       electron: require(`${__dirname}/node_modules/electron`)
     });
@@ -199,6 +200,21 @@ try {
     createMenuMain();
     winGrid.close();
     winGrid = null;
+  });
+
+  //Dialog Confirmation Delete ticket
+  ipcMain.on('open-delete-ticket-dialog', (event, ticket: any) => {
+    const options = {
+      type: 'question',
+      buttons: ['Yes', 'No',],
+      defaultId: 1,
+      title: 'Information',
+      message: 'Are you sure to delete this ticket?',
+    };
+    dialog.showMessageBox(options).then((result) => {
+      event.sender.send('delete-ticket-dialog-selection', result.response, ticket);
+    });
+
   });
 
   app.on('ready', () => setTimeout(createWindow, 400));

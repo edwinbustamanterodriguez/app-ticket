@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {DatabaseService} from '../core/data-access/database.service';
+import {DatabaseRepositoriesService} from '../core/data-access/settings_sqlite/database-repositories.service';
 import {SettingService} from '../core/services/setting.service';
 import {Setting} from '../shared/model/setting.model';
 import {ElectronService} from '../core/services';
 import {io} from 'socket.io-client';
 import {Ticket} from '../shared/model/ticket';
 import {ItemTicket} from '../core/data-access/entities/item_ticket.entity';
+import {TicketsRepositoryService} from '../core/data-access/repositories/ticketsRepository';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +22,7 @@ export class HomeComponent implements OnInit {
   private socket: any;
 
   constructor(private router: Router,
-              private databaseService: DatabaseService,
+              private ticketsRepositoryService: TicketsRepositoryService,
               private settingService: SettingService,
               private electronService: ElectronService) {
     this.socket = io('http://localhost:8182');
@@ -51,8 +52,6 @@ export class HomeComponent implements OnInit {
   }
 
   saveTicketInDB(ticket: Ticket): void {
-    console.log(ticket);
-
     let item = new ItemTicket();
     item.source = ticket.source;
     item.postedDateTime = ticket.postedDateTime;
@@ -69,23 +68,19 @@ export class HomeComponent implements OnInit {
     item.body3 = ticket.body3;
     item.extra1 = ticket.extra1;
     item.extra2 = ticket.extra2;
-    let maxTicket = this.settingService.getSettings().maxTicket;
-
-    this.saveTicket(item, maxTicket);
+    this.saveTicket(item);
   }
 
 
   getTickets(): void {
-    this.databaseService
-      .connection
-      .then(() => ItemTicket.find())
-      .then(tickets => {
+    this.ticketsRepositoryService.getTickets().then(tickets => {
         let composeText = '';
         tickets.forEach(item => {
           composeText = composeText + this.getTicketHTML(item);
         });
         this.tickerText = composeText;
-      })
+      }
+    );
   }
 
   getTicketHTML(ticket: ItemTicket): string {
@@ -95,36 +90,18 @@ export class HomeComponent implements OnInit {
     const url = ticket.url;
     startTag = '<span class="alert-red">'
 
-    const imageTag = '<img class="provider-icon-ticket" src="assets/icons/' + providerLogo + '">';
+    const imageTag = '<img class="provider-icon" src="assets/icons/' + providerLogo + '">';
 
     const anchorTag = '<a href="' + url + '" target="_blank" class="device-text">';
 
     return imageTag + '<strong>' + anchorTag + ticket.header + '</a></strong>' + ': ' + startTag + ticket.body1 + endTag;
   }
 
-  async saveTicket(itemTicket: ItemTicket, maxTicket: number) {
-
-    //const itemsNum: number = await itemRepo.count();
-    /*if (itemsNum >= maxTicket) {
-      const tickets: ItemTicket[] = await itemRepo.find({
-        order: {
-          id: "ASC",
-        },
-        take: 1,
-      });
-
-      if (tickets.length > 0) {
-        await itemRepo.delete(tickets[0].id);
-      }
-    }*/
-
-    this.databaseService
-      .connection
-      .then(() => itemTicket.save())
-      .then(() => {
+  async saveTicket(itemTicket: ItemTicket) {
+    this.ticketsRepositoryService.saveTicket(itemTicket).then(ticket => {
         this.getTickets();
-      });
-
+      }
+    );
   }
 
   completeIteration(completeIterationEvent: String): void {

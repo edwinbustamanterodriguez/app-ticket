@@ -1,7 +1,8 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {ElectronService} from 'ngx-electron';
 import {ItemTicket} from '../core/data-access/entities/item_ticket.entity';
-import {DatabaseService} from '../core/data-access/database.service';
+import {TicketsRepositoryService} from '../core/data-access/repositories/ticketsRepository';
+import {dialog} from 'electron';
+import {ElectronService} from '../core/services';
 
 @Component({
   selector: 'app-grid',
@@ -11,20 +12,14 @@ import {DatabaseService} from '../core/data-access/database.service';
 export class GridComponent implements OnInit {
   ticketsList: ItemTicket[];
 
-  constructor(private electronService: ElectronService, private ref: ChangeDetectorRef, private databaseService: DatabaseService) {
-    /*this.electronService.ipcRenderer.on('delete-ticket-dialog-selection', (event, index, ticket) => {
+  constructor(private electronService: ElectronService, private ref: ChangeDetectorRef, private ticketsRepositoryService: TicketsRepositoryService) {
+    this.electronService.ipcRenderer.on('delete-ticket-dialog-selection', (event, index, ticket) => {
       if (index === 0) {
-        this.dbService.deleteItem(ticket).subscribe((items) => {
-          this.ticketsList = items;
-          this.ref.detectChanges();
+        this.ticketsRepositoryService.deleteTicket(ticket).then(result => {
+          this.getTickets();
         });
       }
-    });*/
-
-    /*this.electronService.ipcRenderer.on('ticketsCurrentList', (event, ticketsCurrentList: ItemTicket[]) => {
-      this.ticketsList = ticketsCurrentList;
-      this.ref.detectChanges();
-    });*/
+    });
   }
 
   ngOnInit(): void {
@@ -32,21 +27,24 @@ export class GridComponent implements OnInit {
   }
 
   getTickets(): void {
-    this.databaseService
-      .connection
-      .then(() => ItemTicket.find())
-      .then(tickets => {
+    this.ticketsRepositoryService.getTickets().then(
+      tickets => {
         this.ticketsList = tickets;
-      })
+        this.ref.detectChanges();
+      }
+    );
   }
 
 
-  deleteItem(item: ItemTicket): void {
-   // this.electronService.ipcRenderer.send('open-delete-ticket-dialog', item);
+  deleteItem(itemTicket: ItemTicket): void {
+    this.electronService.ipcRenderer.send('open-delete-ticket-dialog', itemTicket);
   }
 
   deleteAllData(): void {
-
+    this.ticketsRepositoryService.clearTickets().then(() => {
+        this.getTickets();
+      }
+    );
   }
 
   closeWindow(): void {
