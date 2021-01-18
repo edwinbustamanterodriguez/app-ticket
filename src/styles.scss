@@ -64,10 +64,21 @@ html, body {
   background-size: cover; /* version standardisée */
 }
 
-//Settings
+//Settings Global
 .settings-global-p{
   color: $color-p-settings;
   text-decoration: none;
   font-size: $font-size-p-settings;
+}
+
+.url-app-ticker{
+  color: $url-color;
+  text-decoration: none;
+  font-size: $font-size-p-settings;
+}
+.url-app-ticker:hover{
+  visibility: visible;
+  text-decoration: underline $url-color;
+  cursor: pointer;
 }
 

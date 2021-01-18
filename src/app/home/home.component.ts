@@ -1,6 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
-import {DatabaseRepositoriesService} from '../core/data-access/settings_sqlite/database-repositories.service';
 import {SettingService} from '../core/services/setting.service';
 import {Setting} from '../shared/model/setting.model';
 import {ElectronService} from '../core/services';
@@ -12,9 +11,13 @@ import {TicketsRepositoryService} from '../core/data-access/repositories/tickets
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent implements OnInit {
+  criticalIndicator: number;
+  errorIndicator: number;
+  warningIndicator: number;
   tickets: ItemTicket[] = [];
   currentTime = new Date();
   speedTicker: number;
@@ -48,6 +51,9 @@ export class HomeComponent implements OnInit {
     // Socket IO
     this.socket.on('message', (ticket: Ticket) => {
       this.saveTicketInDB(ticket);
+      this.criticalIndicator = 0;
+      this.errorIndicator = 0;
+      this.warningIndicator = 0;
     });
   }
 
@@ -98,10 +104,7 @@ export class HomeComponent implements OnInit {
   }
 
   async saveTicket(itemTicket: ItemTicket) {
-    this.ticketsRepositoryService.saveTicket(itemTicket).then(ticket => {
-        this.getTickets();
-      }
-    );
+    this.ticketsRepositoryService.saveTicket(itemTicket).then();
   }
 
   completeIteration(completeIterationEvent: String): void {

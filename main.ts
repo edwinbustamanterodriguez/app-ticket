@@ -25,10 +25,11 @@ function createWindow(): BrowserWindow {
   win = new BrowserWindow({
     x: 0,
     y: 0,
-    width: size.width,
-    height: 100,
-    resizable: false,
-    movable: true,
+    width: 800, // size.width / 2,
+    height: 120, // size.height / 1.5,
+    minHeight: 120,
+    maxHeight: 120,
+    maxWidth:size.width,
     webPreferences: {
       nodeIntegration: true,
       allowRunningInsecureContent: (serve) ? true : false,

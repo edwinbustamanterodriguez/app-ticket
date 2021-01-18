@@ -1,7 +1,7 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column,BeforeInsert} from 'typeorm';
 
 @Entity({name: 'tickets'})
-export class ItemTicket  extends BaseEntity {
+export class ItemTicket {
 
   @PrimaryGeneratedColumn()
   id: number;
@@ -50,5 +50,13 @@ export class ItemTicket  extends BaseEntity {
 
   @Column({nullable: true,})
   extra2!: string;
-}
 
+
+  @Column({nullable: false, select: false,})
+  isRead: boolean;
+
+  @BeforeInsert()
+  beforeInsertActions() {
+    this.isRead = false;
+  }
+}

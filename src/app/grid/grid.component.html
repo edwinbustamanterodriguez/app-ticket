@@ -10,6 +10,7 @@
           <th scope="col"><span>Header</span></th>
           <th scope="col"><span>Body</span></th>
           <th scope="col"><span>Url</span></th>
+          <th scope="col"><span>Status</span></th>
           <th scope="col"></th>
         </tr>
         </thead>
@@ -20,9 +21,10 @@
           <td class="settings-global-p">{{ticket.postedDateTime | toDateTimePipe}}</td>
           <td class="settings-global-p">{{ticket.header}}</td>
           <td class="settings-global-p">{{ticket.body1}}</td>
-          <td><a href="{{ticket.url}}" target="_blank" class="device-text"><p class="settings-global-p">
+          <td><p class="url-app-ticker" (click)="openUrl(ticket.url)">
             {{(ticket.url && ticket.url.length > 20) ? (ticket.url | slice:0:20) + '..' : (ticket.url)}}
-          </p></a></td>
+          </p></td>
+          <td class="settings-global-p"><p>{{ticket.isRead ? 'Read' : 'Unread'}}</p></td>
           <td class="text-right">
             <div class="btn-group">
               <button type="submit" class="btn btn-danger btn-sm" (click)="deleteItem(ticket)">

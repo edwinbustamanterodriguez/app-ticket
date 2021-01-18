@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ItemTicket} from '../core/data-access/entities/item_ticket.entity';
 import {TicketsRepositoryService} from '../core/data-access/repositories/ticketsRepository';
-import {dialog} from 'electron';
+import {shell} from 'electron';
 import {ElectronService} from '../core/services';
 
 @Component({
@@ -35,7 +35,6 @@ export class GridComponent implements OnInit {
     );
   }
 
-
   deleteItem(itemTicket: ItemTicket): void {
     this.electronService.ipcRenderer.send('open-delete-ticket-dialog', itemTicket);
   }
@@ -49,5 +48,9 @@ export class GridComponent implements OnInit {
 
   closeWindow(): void {
     this.electronService.ipcRenderer.send('close-grid-win', null);
+  }
+
+  openUrl(url: string): void {
+    shell.openExternal(url);
   }
 }

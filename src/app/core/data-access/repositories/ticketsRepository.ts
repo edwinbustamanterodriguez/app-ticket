@@ -20,10 +20,10 @@ export class TicketsRepositoryService {
 
   async saveTicket(itemTicket: ItemTicket): Promise<ItemTicket> {
     let itemTicketRepository = await this.databaseRepositoriesConfigService.getTicketRepository();
-    let maxTicket = this.settingService.getSettings().maxTicket;
-    const itemsNum: number = await itemTicketRepository.count();
+    /*let maxTicket = this.settingService.getSettings().maxTicket;
+    const itemsNum: number = await itemTicketRepository.count();*/
 
-    //NUMBERS TICKETS IN DATABASE
+   /* //NUMBERS TICKETS IN DATABASE
     if (itemsNum >= maxTicket) {
       const tickets: ItemTicket[] = await itemTicketRepository.find({
         order: {
@@ -35,7 +35,7 @@ export class TicketsRepositoryService {
       if (tickets.length > 0) {
         await itemTicketRepository.delete(tickets[0].id);
       }
-    }
+    }*/
     return await itemTicketRepository.save(itemTicket);
   }
 
