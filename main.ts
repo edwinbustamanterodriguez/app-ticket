@@ -29,7 +29,7 @@ function createWindow(): BrowserWindow {
     height: 120, // size.height / 1.5,
     minHeight: 120,
     maxHeight: 120,
-    maxWidth:size.width,
+    maxWidth: size.width,
     webPreferences: {
       nodeIntegration: true,
       allowRunningInsecureContent: (serve) ? true : false,
@@ -216,6 +216,13 @@ try {
       event.sender.send('delete-ticket-dialog-selection', result.response, ticket);
     });
 
+  });
+
+  //Listen changes in db sqlite tickets
+  ipcMain.on('changes-in-tickets-db', (event, any: any) => {
+    if (winGrid !== null) {
+      winGrid.webContents.send('changes-in-tickets-db', any);
+    }
   });
 
   app.on('ready', () => setTimeout(createWindow, 400));

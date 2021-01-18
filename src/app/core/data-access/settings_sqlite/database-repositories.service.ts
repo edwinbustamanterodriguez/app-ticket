@@ -3,6 +3,8 @@ import {Connection, createConnection, Repository} from 'typeorm';
 import {Settings} from './settings';
 import {User} from '../entities/user.entity';
 import {ItemTicket} from '../entities/item_ticket.entity';
+import {TicketSuscriber} from '../repositories/ticket_suscriber';
+import {GridComponent} from '../../../grid/grid.component';
 /*export async function getProductRepository(): Promise<Repository<ItemTicket>> {
   if (connection === undefined) {
     Settings.initialize();
@@ -25,7 +27,7 @@ let connection: Connection;
 export class DatabaseRepositoriesService {
 
   constructor() {
-    this.createDataBaseConnection();
+    this.createDataBaseConnection().then();
   }
 
   async createDataBaseConnection(): Promise<Connection> {
@@ -35,6 +37,7 @@ export class DatabaseRepositoriesService {
           type: 'sqlite',
           database: Settings.dbPath,
           entities: [User, ItemTicket],
+          subscribers: [TicketSuscriber],
           synchronize: true,
           logging: 'all',
         }

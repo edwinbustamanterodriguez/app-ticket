@@ -12,13 +12,19 @@ import {ElectronService} from '../core/services';
 export class GridComponent implements OnInit {
   ticketsList: ItemTicket[];
 
-  constructor(private electronService: ElectronService, private ref: ChangeDetectorRef, private ticketsRepositoryService: TicketsRepositoryService) {
+  constructor(private electronService: ElectronService,
+              private ref: ChangeDetectorRef,
+              private ticketsRepositoryService: TicketsRepositoryService,
+  ) {
     this.electronService.ipcRenderer.on('delete-ticket-dialog-selection', (event, index, ticket) => {
       if (index === 0) {
         this.ticketsRepositoryService.deleteTicket(ticket).then(result => {
           this.getTickets();
         });
       }
+    });
+    this.electronService.ipcRenderer.on('changes-in-tickets-db', (event, any) => {
+      this.getTickets();
     });
   }
 

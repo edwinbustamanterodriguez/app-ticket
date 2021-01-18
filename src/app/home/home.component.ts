@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
               private settingService: SettingService,
               private electronService: ElectronService) {
     this.socket = io('http://localhost:8182');
-    this.getTickets();
+    this.getTicketsConfig();
   }
 
   ngOnInit(): void {
@@ -74,17 +74,19 @@ export class HomeComponent implements OnInit {
     item.body3 = ticket.body3;
     item.extra1 = ticket.extra1;
     item.extra2 = ticket.extra2;
+    item.isRead = false;
     this.saveTicket(item);
   }
 
 
-  getTickets(): void {
-    this.ticketsRepositoryService.getTickets().then(tickets => {
+  getTicketsConfig(): void {
+    this.ticketsRepositoryService.getTicketsConfig().then(tickets => {
         let composeText = '';
         tickets.forEach(item => {
           composeText = composeText + this.getTicketHTML(item);
         });
         this.tickerText = composeText;
+       this.electronService.ipcRenderer.send('changes-in-tickets-db', null);
       }
     );
   }
@@ -104,10 +106,13 @@ export class HomeComponent implements OnInit {
   }
 
   async saveTicket(itemTicket: ItemTicket) {
-    this.ticketsRepositoryService.saveTicket(itemTicket).then();
+    this.ticketsRepositoryService.saveTicket(itemTicket).then(itemTicket => {
+      this.electronService.ipcRenderer.send('changes-in-tickets-db', null);
+      }
+    );
   }
 
   completeIteration(completeIterationEvent: String): void {
-    this.getTickets();
+    this.getTicketsConfig();
   }
 }

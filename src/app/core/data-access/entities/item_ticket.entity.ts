@@ -52,11 +52,7 @@ export class ItemTicket {
   extra2!: string;
 
 
-  @Column({nullable: false, select: false,})
+  @Column({nullable: false,})
   isRead: boolean;
 
-  @BeforeInsert()
-  beforeInsertActions() {
-    this.isRead = false;
-  }
 }
