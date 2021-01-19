@@ -322,8 +322,6 @@ function createMenuSetting() {
     {
       label: app.name,
       submenu: [
-        {role: 'about'},
-        {type: 'separator'},
         {role: 'quit'}
       ]
     }
@@ -344,8 +342,6 @@ function createMenuGrid() {
     {
       label: app.name,
       submenu: [
-        {role: 'about'},
-        {type: 'separator'},
         {role: 'quit'}
       ]
     }
