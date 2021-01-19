@@ -41,30 +41,10 @@ export class TicketsRepositoryService {
 
   async getTicketsConfig(): Promise<ItemTicket[]> {
     let itemTicketRepository = await this.databaseRepositoriesConfigService.getTicketRepository();
-
     let maxTicketsShow = this.settingService.getSettings().maxTicketShow;
-
-    //Logic Remove
-    const itemsRead: number = await itemTicketRepository.count({isRead: true, order: 'ASC'});
-    if (itemsRead > maxTicketsShow) {
-      let take = itemsRead - maxTicketsShow;
-      let itemTicketsReadeds = await itemTicketRepository.find({
-        order: {
-          id: 'ASC',
-        },
-        where: {
-          isRead: true
-        },
-        skip: 0,
-        take: take
-      });
-      for (const itemTicket of itemTicketsReadeds) {
-        await this.deleteTicket(itemTicket);
-      }
-    }
-
     const itemsUnRead: number = await itemTicketRepository.count({isRead: false});
     let itemTickets: ItemTicket[];
+
     if (itemsUnRead < maxTicketsShow) {
       let itemTickets1 = await itemTicketRepository.find({
         order: {
@@ -92,5 +72,28 @@ export class TicketsRepositoryService {
       await this.updateTicketStatus(itemTicket);
     }
     return itemTickets;
+  }
+
+  async removeExcessTickets(): Promise<void> {
+    let itemTicketRepository = await this.databaseRepositoriesConfigService.getTicketRepository();
+    let maxTicketsShow = this.settingService.getSettings().maxTicketShow;
+    const itemsRead: number = await itemTicketRepository.count({isRead: true,});
+
+    if (itemsRead > maxTicketsShow) {
+      let take = itemsRead - maxTicketsShow;
+      let itemTicketsReadeds = await itemTicketRepository.find({
+        order: {
+          id: 'ASC',
+        },
+        where: {
+          isRead: true
+        },
+        skip: 0,
+        take: take
+      });
+      for (const itemTicket of itemTicketsReadeds) {
+        await this.deleteTicket(itemTicket);
+      }
+    }
   }
 }

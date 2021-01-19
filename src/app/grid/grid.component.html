@@ -4,7 +4,7 @@
       <table class="table table-sm" aria-describedby="page-heading">
         <thead>
         <tr class="header-table-custom">
-          <th scope="col"><span>Logo</span></th>
+          <th scope="col"></th>
           <th scope="col"><span>Source</span></th>
           <th scope="col"><span>Posted Date Time</span></th>
           <th scope="col"><span>Header</span></th>
@@ -24,7 +24,10 @@
           <td><p class="url-app-ticker" (click)="openUrl(ticket.url)">
             {{(ticket.url && ticket.url.length > 20) ? (ticket.url | slice:0:20) + '..' : (ticket.url)}}
           </p></td>
-          <td class="settings-global-p"><p>{{ticket.isRead ? 'Read' : 'Unread'}}</p></td>
+          <td>
+            <p class="ticket-isRead" *ngIf="ticket.isRead">Read</p>
+            <p class="settings-global-p" *ngIf="!ticket.isRead">Unread</p>
+          </td>
           <td class="text-right">
             <div class="btn-group">
               <button type="submit" class="btn btn-danger btn-sm" (click)="deleteItem(ticket)">

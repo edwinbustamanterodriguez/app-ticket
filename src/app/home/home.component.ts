@@ -81,12 +81,16 @@ export class HomeComponent implements OnInit {
 
   getTicketsConfig(): void {
     this.ticketsRepositoryService.getTicketsConfig().then(tickets => {
-      this.electronService.ipcRenderer.send('changes-in-tickets-db', null);
         let composeText = '';
         tickets.forEach(item => {
           composeText = composeText + this.getTicketHTML(item);
         });
         this.tickerText = composeText;
+        //REMOVE TICKETS EXCESS
+        this.ticketsRepositoryService.removeExcessTickets().then(() => {
+            this.electronService.ipcRenderer.send('changes-in-tickets-db', null);
+          }
+        );
       }
     );
   }
@@ -107,7 +111,7 @@ export class HomeComponent implements OnInit {
 
   async saveTicket(itemTicket: ItemTicket) {
     this.ticketsRepositoryService.saveTicket(itemTicket).then(itemTicket => {
-      this.electronService.ipcRenderer.send('changes-in-tickets-db', null);
+        this.electronService.ipcRenderer.send('changes-in-tickets-db', null);
       }
     );
   }
