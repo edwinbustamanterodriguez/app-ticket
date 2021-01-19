@@ -119,7 +119,6 @@ function createWindowSettings(): BrowserWindow {
 
   // Emitted when the window is closed.
   winSettings.on('closed', () => {
-    createMenuMain();
     winSettings = null;
   });
 
@@ -177,7 +176,6 @@ function createWindowGrid(): BrowserWindow {
 
   // Emitted when the window is closed.
   winGrid.on('closed', () => {
-    createMenuMain();
     winGrid = null;
   });
 
@@ -307,7 +305,16 @@ function createMenuMain() {
       ]
     },
   ])
-  Menu.setApplicationMenu(menu);
+
+  if (process.platform === 'darwin') {
+    Menu.setApplicationMenu(menu);
+
+    win.on('focus', () => {
+      Menu.setApplicationMenu(menu);
+    });
+  } else {
+    win.setMenu(menu);
+  }
 }
 
 function createMenuSetting() {
@@ -321,7 +328,15 @@ function createMenuSetting() {
       ]
     }
   ])
-  Menu.setApplicationMenu(menu);
+  if (process.platform === 'darwin') {
+    Menu.setApplicationMenu(menu);
+
+    winSettings.on('focus', () => {
+      Menu.setApplicationMenu(menu);
+    });
+  } else {
+    winSettings.setMenu(menu);
+  }
 }
 
 function createMenuGrid() {
@@ -335,7 +350,15 @@ function createMenuGrid() {
       ]
     }
   ])
-  Menu.setApplicationMenu(menu);
+  if (process.platform === 'darwin') {
+    Menu.setApplicationMenu(menu);
+
+    winGrid.on('focus', () => {
+      Menu.setApplicationMenu(menu);
+    });
+  } else {
+    winGrid.setMenu(menu);
+  }
 }
 
 // Express Server for Kafka and Socket.io

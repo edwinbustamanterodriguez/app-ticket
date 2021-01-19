@@ -8,7 +8,7 @@ export class Settings {
     public static dbPath: string;
     public static appPath: string;
     private static dataSubFolder: string;
-    private static dbName = 'database2.db';
+    private static dbName = 'database.db';
 
     public static initialize(): void {
         Settings.getPaths();

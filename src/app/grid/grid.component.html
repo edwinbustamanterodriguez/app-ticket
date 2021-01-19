@@ -37,7 +37,8 @@
           </td>
         </tr>
         </tbody>
-        <p *ngIf="!ticketsList || ticketsList.length===0" class="settings-global-p text-center align-content-center">No
+        <p *ngIf="!ticketsList" class="settings-global-p">Loading...</p>
+        <p *ngIf="ticketsList && ticketsList.length===0" class="settings-global-p text-center align-content-center">No
           data exists</p>
       </table>
     </div>
