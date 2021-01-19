@@ -20,11 +20,11 @@ export class ColorSchemeComponent implements OnInit {
 
   ngOnInit() {
     this.settingTemp = this.settingService.settingTemp;
-    this.maxTicket= this.settingTemp.maxTicket;
+    this.maxTicket= this.settingTemp.maxTicketShow;
   }
 
   changeEnd($event) {
-    this.settingTemp.maxTicket = $event.target.value;
+    this.settingTemp.maxTicketShow = $event.target.value;
     console.log($event.target.value)
     this.settingService.settingTemp =  this.settingTemp;
   }

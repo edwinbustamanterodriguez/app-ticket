@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {SettingService} from "../../core/services/setting.service";
-import {ElectronService} from "../../core/services";
-import {Setting} from "../../shared/model/setting.model";
+import {SettingService} from '../../core/services/setting.service';
+import {ElectronService} from '../../core/services';
+import {Setting} from '../../shared/model/setting.model';
 
-// The navigation dashboard component
 @Component({
   selector: 'app-storage-setting-component',
   templateUrl: './storage_setting.component.html',
@@ -12,7 +11,7 @@ import {Setting} from "../../shared/model/setting.model";
 
 export class StorageSettingComponent implements OnInit {
 
-  maxTicket:number;
+  maxTicketShow: number;
   settingTemp: Setting;
 
   constructor(private settingService: SettingService, private electronService: ElectronService) {
@@ -20,12 +19,12 @@ export class StorageSettingComponent implements OnInit {
 
   ngOnInit() {
     this.settingTemp = this.settingService.settingTemp;
-    this.maxTicket= this.settingTemp.maxTicket;
+    this.maxTicketShow = this.settingTemp.maxTicketShow;
   }
 
   changeEnd($event) {
-    this.settingTemp.maxTicket = $event.target.value;
+    this.settingTemp.maxTicketShow = $event.target.value <= 0 ? 1 : $event.target.value;
     console.log($event.target.value)
-    this.settingService.settingTemp =  this.settingTemp;
+    this.settingService.settingTemp = this.settingTemp;
   }
 }

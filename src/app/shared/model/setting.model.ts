@@ -1,10 +1,10 @@
 export class Setting {
   speed: number;
-  maxTicket: number;
+  maxTicketShow: number;
 
-  constructor(speed: number, maxTicket: number) {
+  constructor(speed: number, maxTicketsShow: number) {
     this.speed = speed;
-    this.maxTicket = maxTicket;
+    this.maxTicketShow = maxTicketsShow;
   }
 }
 

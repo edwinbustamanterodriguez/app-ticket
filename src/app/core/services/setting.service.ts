@@ -24,7 +24,7 @@ export class SettingService {
     }
     return {
       speed: 100,
-      maxTicket:20,
+      maxTicketShow:10,
     };
   }
 

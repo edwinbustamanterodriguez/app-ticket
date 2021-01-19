@@ -26,6 +26,24 @@ export class TicketsRepositoryService {
 
   async saveTicket(itemTicket: ItemTicket): Promise<ItemTicket> {
     let itemTicketRepository = await this.databaseRepositoriesConfigService.getTicketRepository();
+    const itemsRead: number = await itemTicketRepository.count({isRead: true, order: 'ASC'});
+    let maxTicketsShow = this.settingService.getSettings().maxTicketShow;
+
+    if (itemsRead > maxTicketsShow) {
+      let itemTicketsReadeds = await itemTicketRepository.find({
+        order: {
+          id: 'ASC',
+        },
+        where: {
+          isRead: true
+        },
+        skip: 0,
+        take: (itemsRead - maxTicketsShow)
+      });
+      for (const itemTicket of itemTicketsReadeds) {
+        await this.deleteTicket(itemTicket);
+      }
+    }
     return await itemTicketRepository.save(itemTicket);
   }
 
@@ -56,49 +74,39 @@ export class TicketsRepositoryService {
   async getTicketsConfig(): Promise<ItemTicket[]> {
     let itemTicketRepository = await this.databaseRepositoriesConfigService.getTicketRepository();
 
-    let maxTicketsShow = this.settingService.getSettings().maxTicket;
+    let maxTicketsShow = this.settingService.getSettings().maxTicketShow;
+    const itemsUnRead: number = await itemTicketRepository.count({isRead: false});
 
-    const itemsNum: number = await itemTicketRepository.count();
+    let itemTickets: ItemTicket[];
+    if (itemsUnRead < maxTicketsShow) {
+      let itemTickets1 = await itemTicketRepository.find({
+        order: {
+          id: 'DESC',
+        },
+        where: {
+          isRead: false
+        },
+        skip: 0,
+        take: maxTicketsShow
+      });
+      itemTickets = itemTickets1.reverse();
 
-    //NUMBERS TICKETS IN DATABASE
-    /* if (itemsNum >= maxTicketsShow) {
-       return await itemTicketRepository.find({
-         order: {
-           id: 'ASC',
-         },
-         where: {
-           isRead: false
-         },
-         skip: 0,
-         take: 2
-       });
-
-       /!*if (tickets.length > 0) {
-         await itemTicketRepository.delete(tickets[0].id);
-       }*!/
-     } else {
-       return new Promise(function (resolve, reject) {
-         // not taking our time to do the job
-         resolve([]); // immediately give the result: 123
-       });
-     }*/
-
-    let itemTickets = await itemTicketRepository.find({
-      order: {
-        id: 'ASC',
-      },
-      where: {
-        isRead: false
-      },
-      skip: 0,
-      take: maxTicketsShow
-    });
+    } else {
+      itemTickets = await itemTicketRepository.find({
+        order: {
+          id: 'ASC',
+        },
+        where: {
+          isRead: false
+        },
+        skip: 0,
+        take: maxTicketsShow
+      });
+    }
 
     for (const itemTicket of itemTickets) {
       await this.updateTicketStatus(itemTicket);
     }
     return itemTickets;
   }
-
-
 }
