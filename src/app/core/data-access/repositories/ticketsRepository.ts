@@ -3,17 +3,12 @@ import {DatabaseRepositoriesService} from '../settings_sqlite/database-repositor
 import {ItemTicket} from '../entities/item_ticket.entity';
 import {SettingService} from '../../services/setting.service';
 import {DeleteResult} from 'typeorm';
-import {Subject} from 'rxjs/Rx';
 import {UpdateResult} from 'typeorm/query-builder/result/UpdateResult';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TicketsRepositoryService {
-  // public listCurrentTickets: ReplaySubject<ItemTicket[]> = new ReplaySubject();
-  listCurrentTickets = new Subject<ItemTicket[]>();
-
-  //public listCurrentTickets: BehaviorSubject<ItemTicket[]> = new BehaviorSubject([]);
 
   constructor(private databaseRepositoriesConfigService: DatabaseRepositoriesService,
               private settingService: SettingService,) {
@@ -43,15 +38,6 @@ export class TicketsRepositoryService {
     let itemTicketRepository = await this.databaseRepositoriesConfigService.getTicketRepository();
     return await itemTicketRepository.update(itemTicket.id, {isRead: true});
   }
-
-  /* changesInDB(itemTicket: ItemTicket) {
-     this.getTickets().then(tickets => {
-       console.log(`New DATA IN CHANGES: `, tickets);
-         this.listCurrentTickets.next(tickets);
-       console.log(`OBSERVABLE DATE: `, this.listCurrentTickets);
-       }
-     );
-   }*/
 
   async getTicketsConfig(): Promise<ItemTicket[]> {
     let itemTicketRepository = await this.databaseRepositoriesConfigService.getTicketRepository();

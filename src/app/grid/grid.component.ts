@@ -2,8 +2,7 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ItemTicket} from '../core/data-access/entities/item_ticket.entity';
 import {TicketsRepositoryService} from '../core/data-access/repositories/ticketsRepository';
 import {shell} from 'electron';
-import {ElectronService} from '../core/services';
-
+import {ElectronService} from 'ngx-electron';
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',

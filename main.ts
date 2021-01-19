@@ -28,7 +28,7 @@ function createWindow(): BrowserWindow {
     width: 800, // size.width / 2,
     height: 120, // size.height / 1.5,
     minHeight: 120,
-    maxHeight: 120,
+    maxHeight: 600,
     maxWidth: size.width,
     webPreferences: {
       nodeIntegration: true,

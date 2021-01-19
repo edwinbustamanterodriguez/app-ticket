@@ -52,7 +52,7 @@ export class ItemTicket {
   extra2!: string;
 
 
-  @Column({nullable: false,})
+  @Column({nullable: true,})
   isRead: boolean;
 
 }
