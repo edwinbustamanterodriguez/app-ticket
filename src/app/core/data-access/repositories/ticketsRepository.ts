@@ -26,24 +26,6 @@ export class TicketsRepositoryService {
 
   async saveTicket(itemTicket: ItemTicket): Promise<ItemTicket> {
     let itemTicketRepository = await this.databaseRepositoriesConfigService.getTicketRepository();
-    const itemsRead: number = await itemTicketRepository.count({isRead: true, order: 'ASC'});
-    let maxTicketsShow = this.settingService.getSettings().maxTicketShow;
-
-    if (itemsRead > maxTicketsShow) {
-      let itemTicketsReadeds = await itemTicketRepository.find({
-        order: {
-          id: 'ASC',
-        },
-        where: {
-          isRead: true
-        },
-        skip: 0,
-        take: (itemsRead - maxTicketsShow)
-      });
-      for (const itemTicket of itemTicketsReadeds) {
-        await this.deleteTicket(itemTicket);
-      }
-    }
     return await itemTicketRepository.save(itemTicket);
   }
 
@@ -75,16 +57,32 @@ export class TicketsRepositoryService {
     let itemTicketRepository = await this.databaseRepositoriesConfigService.getTicketRepository();
 
     let maxTicketsShow = this.settingService.getSettings().maxTicketShow;
-    const itemsUnRead: number = await itemTicketRepository.count({isRead: false});
 
+    //Logic Remove
+    const itemsRead: number = await itemTicketRepository.count({isRead: true, order: 'ASC'});
+    if (itemsRead > maxTicketsShow) {
+      let take = itemsRead - maxTicketsShow;
+      let itemTicketsReadeds = await itemTicketRepository.find({
+        order: {
+          id: 'ASC',
+        },
+        where: {
+          isRead: true
+        },
+        skip: 0,
+        take: take
+      });
+      for (const itemTicket of itemTicketsReadeds) {
+        await this.deleteTicket(itemTicket);
+      }
+    }
+
+    const itemsUnRead: number = await itemTicketRepository.count({isRead: false});
     let itemTickets: ItemTicket[];
     if (itemsUnRead < maxTicketsShow) {
       let itemTickets1 = await itemTicketRepository.find({
         order: {
           id: 'DESC',
-        },
-        where: {
-          isRead: false
         },
         skip: 0,
         take: maxTicketsShow
