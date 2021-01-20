@@ -3,7 +3,7 @@ import {ItemTicket} from '../core/data-access/entities/item_ticket.entity';
 import {TicketsRepositoryService} from '../core/data-access/repositories/ticketsRepository';
 import {shell} from 'electron';
 import {ElectronService} from 'ngx-electron';
-import {DocumentChangeColorService} from '../core/services/document_change_color.service';
+import {DocumentChangeColorService} from '../core/services/settings/document_change_color.service';
 
 @Component({
   selector: 'app-grid',

@@ -1,13 +1,13 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
-import {SettingService} from '../core/services/setting.service';
+import {SettingService} from '../core/services/settings/setting.service';
 import {Setting} from '../shared/model/setting.model';
 import {ElectronService} from '../core/services';
 import {io} from 'socket.io-client';
 import {Ticket} from '../shared/model/ticket';
 import {ItemTicket} from '../core/data-access/entities/item_ticket.entity';
 import {TicketsRepositoryService} from '../core/data-access/repositories/ticketsRepository';
-import {DocumentChangeColorService} from '../core/services/document_change_color.service';
+import {DocumentChangeColorService} from '../core/services/settings/document_change_color.service';
 
 @Component({
   selector: 'app-home',

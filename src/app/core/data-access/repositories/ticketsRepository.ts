@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {DatabaseRepositoriesService} from '../settings_sqlite/database-repositories.service';
 import {ItemTicket} from '../entities/item_ticket.entity';
-import {SettingService} from '../../services/setting.service';
+import {SettingService} from '../../services/settings/setting.service';
 import {DeleteResult} from 'typeorm';
 import {UpdateResult} from 'typeorm/query-builder/result/UpdateResult';
 

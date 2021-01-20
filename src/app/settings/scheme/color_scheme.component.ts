@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {SettingService} from '../../core/services/setting.service';
+import {SettingService} from '../../core/services/settings/setting.service';
 import {Setting} from '../../shared/model/setting.model';
-import {DocumentChangeColorService} from '../../core/services/document_change_color.service';
+import {DocumentChangeColorService} from '../../core/services/settings/document_change_color.service';
 
 @Component({
   selector: 'app-color-scheme-component',

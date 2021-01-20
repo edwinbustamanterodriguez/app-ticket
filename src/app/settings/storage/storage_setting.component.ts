@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SettingService} from '../../core/services/setting.service';
+import {SettingService} from '../../core/services/settings/setting.service';
 import {ElectronService} from '../../core/services';
 import {Setting} from '../../shared/model/setting.model';
 

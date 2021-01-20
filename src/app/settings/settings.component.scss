@@ -14,6 +14,7 @@
   justify-content: flex-end;
   align-items: flex-end;
   height: auto;
+
   button {
     cursor: default;
     margin-right: .4em;
@@ -24,6 +25,8 @@
 
 
 .settings-custom {
+  overflow-y: auto;
+  height: 100%;
   ul {
     list-style-type: none;
     margin: 0;
@@ -32,7 +35,7 @@
     background-color: var(--backgroundColor2);
     position: fixed;
     height: 100%;
-    overflow: auto;
+    overflow-y: auto;
     border-right: 1px solid var(--lineSeparatorColor);
     a {
       display: block;
@@ -49,7 +52,6 @@
       }
     }
   }
-
   .settings-content {
     margin: 0;
     padding: 0;
