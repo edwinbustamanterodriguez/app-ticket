@@ -23,9 +23,9 @@ export class ColorSchemeComponent implements OnInit {
   readColor: string;
   paragraphSize: number;
 
- // private themeWrapper = document.querySelector('body');
+  // private themeWrapper = document.querySelector('body');
 
-  constructor(private settingService: SettingService, private  documentChangeColorService:DocumentChangeColorService) {
+  constructor(private settingService: SettingService, private  documentChangeColorService: DocumentChangeColorService) {
   }
 
   ngOnInit(): void {
@@ -125,7 +125,7 @@ export class ColorSchemeComponent implements OnInit {
 
   changeParagraphSize($event): void {
     if ($event.target.value) {
-      this.settingTemp.paragraphSize = $event.target.value;
+      this.settingTemp.paragraphSize = $event.target.value > 23 ? 23: $event.target.value < 9 ? 9 : $event.target.value;
       this.settingService.settingTemp = this.settingTemp;
       this.documentChangeColorService.applyTempColor();
     }

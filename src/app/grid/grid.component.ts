@@ -3,6 +3,8 @@ import {ItemTicket} from '../core/data-access/entities/item_ticket.entity';
 import {TicketsRepositoryService} from '../core/data-access/repositories/ticketsRepository';
 import {shell} from 'electron';
 import {ElectronService} from 'ngx-electron';
+import {DocumentChangeColorService} from '../core/services/document_change_color.service';
+
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
@@ -14,7 +16,10 @@ export class GridComponent implements OnInit {
   constructor(private electronService: ElectronService,
               private ref: ChangeDetectorRef,
               private ticketsRepositoryService: TicketsRepositoryService,
+              private documentChangeColorService: DocumentChangeColorService
   ) {
+
+
     this.electronService.ipcRenderer.on('delete-ticket-dialog-selection', (event, index, ticket) => {
       if (index === 0) {
         this.ticketsRepositoryService.deleteTicket(ticket).then(result => {
@@ -25,10 +30,15 @@ export class GridComponent implements OnInit {
     this.electronService.ipcRenderer.on('changes-in-tickets-db', (event, any) => {
       this.getTickets();
     });
+    this.electronService.ipcRenderer.on('change-color-theme', (event, any) => {
+        this.documentChangeColorService.applyPersistColor();
+      }
+    );
   }
 
   ngOnInit(): void {
     this.getTickets();
+    this.documentChangeColorService.applyPersistColor();
   }
 
   getTickets(): void {

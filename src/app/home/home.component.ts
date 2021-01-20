@@ -7,6 +7,7 @@ import {io} from 'socket.io-client';
 import {Ticket} from '../shared/model/ticket';
 import {ItemTicket} from '../core/data-access/entities/item_ticket.entity';
 import {TicketsRepositoryService} from '../core/data-access/repositories/ticketsRepository';
+import {DocumentChangeColorService} from '../core/services/document_change_color.service';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,8 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router,
               private ticketsRepositoryService: TicketsRepositoryService,
               private settingService: SettingService,
-              private electronService: ElectronService) {
+              private electronService: ElectronService,
+              private documentChangeColorService: DocumentChangeColorService) {
     this.socket = io('http://localhost:8182');
     this.getTicketsConfig();
   }
@@ -35,6 +37,8 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     const setting: Setting = this.settingService.getSettings();
     this.speedTicker = setting.speed;
+    //Set color Custom
+    this.documentChangeColorService.applyPersistColor();
     //Listen Changes
     this.electronService.ipcRenderer.on('win-main', (event, args) => {
       console.log(args);
@@ -42,6 +46,7 @@ export class HomeComponent implements OnInit {
         const args1 = args as Setting;
         this.speedTicker = args1.speed;
       }
+      this.documentChangeColorService.applyPersistColor();
     });
     // Timer for Date
     setInterval(() => {

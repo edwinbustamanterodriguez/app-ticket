@@ -21,6 +21,7 @@ export class DocumentChangeColorService {
     this.themeWrapper.style.setProperty('--sliderSelectionColor', settingTemp.sliderSelectionColor);
     this.themeWrapper.style.setProperty('--urlColor', settingTemp.urlColor);
     this.themeWrapper.style.setProperty('--readColor', settingTemp.readColor);
+    this.themeWrapper.style.setProperty('--paragraphColor', settingTemp.paragraphColor);
     this.themeWrapper.style.setProperty('--paragraphSize', settingTemp.paragraphSize + 'px');
   }
   applyPersistColor(): void {
@@ -34,6 +35,7 @@ export class DocumentChangeColorService {
     this.themeWrapper.style.setProperty('--sliderSelectionColor', settings.sliderSelectionColor);
     this.themeWrapper.style.setProperty('--urlColor', settings.urlColor);
     this.themeWrapper.style.setProperty('--readColor', settings.readColor);
+    this.themeWrapper.style.setProperty('--paragraphColor', settings.paragraphColor);
     this.themeWrapper.style.setProperty('--paragraphSize', settings.paragraphSize + 'px');
   }
 }

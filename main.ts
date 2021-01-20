@@ -190,6 +190,9 @@ try {
   // Added 400 ms to fix the black background issue while using transparent window. More detais at https://github.com/electron/electron/issues/15947
   ipcMain.on('close-settings-win', (event, arg) => {
     win.webContents.send('win-main', arg);
+    if (winGrid !== null) {
+      winGrid.webContents.send('change-color-theme', arg);
+    }
     createMenuMain();
     winSettings.close();
     winSettings = null;
