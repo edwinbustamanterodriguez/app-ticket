@@ -14,7 +14,7 @@ $default-font: 'Open Sans', sans-serif;*/
   --sliderSelectionColor: #fd7e14;
   --urlColor: #17a2b8;
   --paragraphColor: #adb5bd;
-  --success: #28a745;
+  --readColor: #28a745;
   --paragraphSize: 13px;
 }
 
@@ -28,6 +28,6 @@ $variables: (
   --sliderSelectionColor: var(--sliderSelectionColor),
   --urlColor: var(--urlColor),
   --paragraphColor: var(--paragraphColor),
-  --success: var(--success),
+  --readColor: var(--readColor),
   --paragraphSize: var(--paragraphSize)
 );

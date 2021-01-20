@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import {Setting} from "../../shared/model/setting.model";
-import {ReplaySubject} from "rxjs";
+import {Injectable} from '@angular/core';
+import {Setting} from '../../shared/model/setting.model';
+import {ReplaySubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,8 @@ import {ReplaySubject} from "rxjs";
 export class SettingService {
   public storageChange: ReplaySubject<Setting> = new ReplaySubject();
   private _settingTemp: Setting = null;
-  constructor(  ) {
+
+  constructor() {
   }
 
 
@@ -24,7 +25,18 @@ export class SettingService {
     }
     return {
       speed: 100,
-      maxTicketShow:10,
+      maxTicketShow: 10,
+      backgroundColor: '#343a40',
+      backgroundColor2: '#495057',
+      lineSeparatorColor: '#212529',
+      activeListColor: '#007bff',
+      activeTextColor: '#ffffff',
+      sliderBarColor: '#ffe4d1',
+      sliderSelectionColor: '#fd7e14',
+      urlColor: '#17a2b8',
+      paragraphColor: '#adb5bd',
+      readColor: '#28a745',
+      paragraphSize: 13
     };
   }
 

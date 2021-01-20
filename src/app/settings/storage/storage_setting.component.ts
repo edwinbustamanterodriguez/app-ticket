@@ -24,7 +24,6 @@ export class StorageSettingComponent implements OnInit {
 
   changeEnd($event) {
     this.settingTemp.maxTicketShow = $event.target.value <= 0 ? 1 : $event.target.value;
-    console.log($event.target.value)
     this.settingService.settingTemp = this.settingTemp;
   }
 }
