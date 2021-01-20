@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {SettingService} from "../../core/services/setting.service";
-import {ElectronService} from "../../core/services";
-import {Setting} from "../../shared/model/setting.model";
+import {SettingService} from '../../core/services/setting.service';
+import {ElectronService} from '../../core/services';
+import {Setting} from '../../shared/model/setting.model';
 
 // The navigation dashboard component
 @Component({
@@ -10,22 +10,19 @@ import {Setting} from "../../shared/model/setting.model";
   styleUrls: ['./color_scheme.component.scss']
 })
 
-export class ColorSchemeComponent implements OnInit {
+export class ColorSchemeComponent {
 
-  maxTicket:number;
-  settingTemp: Setting;
+  private themeWrapper = document.querySelector('body');
 
-  constructor(private settingService: SettingService,) {
+  onSubmit(form) {
+    this.global(form.value);
   }
 
-  ngOnInit() {
-    this.settingTemp = this.settingService.settingTemp;
-    this.maxTicket= this.settingTemp.maxTicketShow;
-  }
-
-  changeEnd($event) {
-    this.settingTemp.maxTicketShow = $event.target.value;
-    console.log($event.target.value)
-    this.settingService.settingTemp =  this.settingTemp;
+  global(stylesheet) {
+    console.log(stylesheet);
+    // Navigation Styles
+    if (stylesheet.backgroundColor) {
+      this.themeWrapper.style.setProperty('--backgroundColor', stylesheet.backgroundColor);
+    }
   }
 }

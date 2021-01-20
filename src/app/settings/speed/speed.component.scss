@@ -1,12 +1,14 @@
-@import "src/variables";
+@import '../../../theme';
+@import '../../../functions';
+
 // We need to use ::ng-deep to overcome view encapsulation
 ::ng-deep {
   .custom-slider .ngx-slider .ngx-slider-bar {
-    background: $ngx-slider-bar-color;
+    background: var(--sliderBarColor);
     height: 2px;
   }
   .custom-slider .ngx-slider .ngx-slider-selection {
-    background: $ngx-slider-selection-color;
+    background: var(--sliderSelectionColor);
   }
 
   .custom-slider .ngx-slider .ngx-slider-pointer {
@@ -24,12 +26,12 @@
   }
 
   .custom-slider .ngx-slider .ngx-slider-bubble {
-    bottom: $font-size-p-settings;
+    bottom: var(--paragraphSize);
   }
 
   .custom-slider .ngx-slider .ngx-slider-limit {
     font-weight: normal;
-    color: $ngx-slider-selection-color;
+    color: var(--sliderSelectionColor);
   }
 
   .custom-slider .ngx-slider .ngx-slider-tick {
@@ -37,12 +39,12 @@
     height: 10px;
     margin-left: 4px;
     border-radius: 0;
-    background: $ngx-slider-bar-color;
+    background: var(--sliderBarColor);
     top: -1px;
   }
 
   .custom-slider .ngx-slider .ngx-slider-tick.ngx-slider-selected {
-    background: $ngx-slider-selection-color;
+    background: var(--sliderSelectionColor);
   }
 }
 

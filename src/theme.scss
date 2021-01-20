@@ -1,0 +1,33 @@
+/*@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+$default-font: 'Open Sans', sans-serif;*/
+
+
+// default colors
+.theme-wrapper {
+  --backgroundColor: #343a40;
+  --backgroundColor2: #495057;
+  --lineSeparatorColor: #212529;
+  --activeListColor: #007bff;
+  --activeTextColor: #fff;
+  --sliderBarColor: #ffe4d1;
+  --sliderSelectionColor: #fd7e14;
+  --urlColor: #17a2b8;
+  --paragraphColor: #adb5bd;
+  --success: #28a745;
+  --paragraphSize: 13px;
+}
+
+$variables: (
+  --backgroundColor: var(--backgroundColor),
+  --backgroundColor2: var(--backgroundColor2),
+  --lineSeparatorColor: var(--lineSeparatorColor),
+  --activeListColor: var(--activeListColor),
+  --activeTextColor: var(--activeTextColor),
+  --sliderBarColor: var(--sliderBarColor),
+  --sliderSelectionColor: var(--sliderSelectionColor),
+  --urlColor: var(--urlColor),
+  --paragraphColor: var(--paragraphColor),
+  --success: var(--success),
+  --paragraphSize: var(--paragraphSize)
+);

@@ -1,16 +1,29 @@
-<div class="modal-body">
-  <div class="row justify-content-between">
-    <div class="col align-self-start">
-      <p class="settings-global-p">Color Scheme</p>
+<!--<div class="test-theme">
+  <div class="modal-body">
+    <div class="row justify-content-between">
+      <div class="col align-self-start">
+        <p class="settings-global-p">Color Scheme</p>
+      </div>
+    </div>
+    <div class="form-inline">
+      <div class="form-group input-group-sm">
+        &lt;!&ndash;<label class="settings-global-p" for="max-ticket">Scheme:</label>
+        <input class="form-control ml-2" id="max-ticket" type="number" min="0" max="1000" [value]="maxTicket" (input)="changeEnd($event)">&ndash;&gt;
+      </div>
     </div>
   </div>
-  <div class="form-inline">
-    <div class="form-group input-group-sm">
-      <!--<label class="settings-global-p" for="max-ticket">Scheme:</label>
-      <input class="form-control ml-2" id="max-ticket" type="number" min="0" max="1000" [value]="maxTicket" (input)="changeEnd($event)">-->
-    </div>
-  </div>
+</div>-->
+
+<div class="theme">
+  <form #gsForm="ngForm" (ngSubmit)="onSubmit(gsForm)">
+    <label>Set background Color: </label>
+    <input #backgroundColor name="backgroundColor" type="color" ngModel>
+    <br>
+    <br><br>
+    <button type="submit">Submit</button>
+  </form>
 </div>
+
 
 
 

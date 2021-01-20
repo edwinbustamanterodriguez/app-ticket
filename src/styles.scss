@@ -1,6 +1,6 @@
-@import "src/variables";
-
-
+@import "variables";
+@import 'theme';
+@import 'functions';
 /* You can add global styles to this file, and also import other style files */
 @font-face {
   font-family: 'PressStart';
@@ -52,38 +52,30 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background-color: $background-color-settings;
+  background-color: var(--backgroundColor);
   font-family: Consolas, Arial, Helvetica, sans-serif;
-}
-
-.main-container {
-  height: 100%;
-  //background: url(./assets/background.jpg) no-repeat center fixed;
-  background-color: $background-color-settings;
-  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
-  background-size: cover; /* version standardisée */
 }
 
 //Settings Global
 .settings-global-p{
-  color: $color-p-settings;
+  color: var(--paragraphColor);
   text-decoration: none;
-  font-size: $font-size-p-settings;
+  font-size: var(--paragraphSize);
 }
 .ticket-isRead{
-  color: $success;
+  color: var(--success);
   text-decoration: none;
-  font-size: $font-size-p-settings;
+  font-size: var(--paragraphSize);
 }
 
 .url-app-ticker{
-  color: $url-color;
+  color: var(--urlColor);
   text-decoration: none;
-  font-size: $font-size-p-settings;
+  font-size: var(--paragraphSize);
 }
 .url-app-ticker:hover{
   visibility: visible;
-  text-decoration: underline $url-color;
+  text-decoration: underline var(--urlColor);
   cursor: pointer;
 }
 
