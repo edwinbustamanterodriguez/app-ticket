@@ -57,25 +57,52 @@ html, body {
 }
 
 //Settings Global
-.settings-global-p{
+.settings-global-p {
   color: var(--paragraphColor);
   text-decoration: none;
   font-size: var(--paragraphSize);
 }
-.ticket-isRead{
+
+.ticket-isRead {
   color: var(--readColor);
   text-decoration: none;
   font-size: var(--paragraphSize);
 }
 
-.url-app-ticker{
+.url-app-ticker {
   color: var(--urlColor);
   text-decoration: none;
   font-size: var(--paragraphSize);
 }
-.url-app-ticker:hover{
+
+.url-app-ticker:hover {
   visibility: visible;
   text-decoration: underline var(--urlColor);
   cursor: pointer;
+}
+
+.line-separator {
+  margin-top: 2em;
+  margin-bottom: 1em;
+  border-top: 1px solid var(--lineSeparatorColor);
+}
+
+.settings-header {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+
+  .settings-header-title {
+    font-size: var(--paragraphSize);
+    color: var(--paragraphColor);
+    margin-right: .5em;
+  }
+
+  .settings-header-line {
+    -webkit-flex: 1;
+    flex: 1;
+    height: .5px;
+    background-color: var(--paragraphColor);
+  }
 }
 

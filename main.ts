@@ -76,7 +76,7 @@ function createWindowSettings(): BrowserWindow {
     title: 'Settings',
     parent: win,
     width: 900, // size.width / 2,
-    height: 200, // size.height / 1.5,
+    height: 400, // size.height / 1.5,
     center: true,
     resizable: false,
     frame: true,

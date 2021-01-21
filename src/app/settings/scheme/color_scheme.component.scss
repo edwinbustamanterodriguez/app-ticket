@@ -1,11 +1,13 @@
-theme {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+@import '../../../theme';
+@import '../../../functions';
 
-  background-color: #f4f4f4;
-  padding: 24px;
-  text-align: right;
-  font-family: 'Open Sans', serif;
-  font-weight: 300;
+.group-themes {
+  margin-top: 1em;
+  margin-left: 3em;
+  margin-bottom: 2em;
 }
+
+
+
+
+

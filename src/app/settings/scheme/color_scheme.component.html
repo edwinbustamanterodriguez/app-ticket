@@ -1,58 +1,129 @@
 <div class="modal-body">
-  <div class="row justify-content-between">
-    <div class="col align-self-start">
-      <p class="settings-global-p">Customize colors</p>
+  <div class="settings-header">
+    <div class="settings-header-title">General Colors</div>
+    <div class="settings-header-line"></div>
+  </div>
+  <div class="group-themes">
+    <div class="row justify-content-between">
+      <div class="col align-self-center ">
+        <div class="form-group input-group-sm">
+          <label class="settings-global-p">Background Color: </label>
+          <input class="ml-2" type="color" id="backgroundColor" name="backgroundColor" [value]="backgroundColor"
+                 (input)="changeBackgroundColor($event)">
+        </div>
+      </div>
+      <div class="col align-self-center">
+        <div class="form-group input-group-sm">
+          <label class="settings-global-p">Background2 Color: </label>
+          <input class="ml-2" type="color" id="backgroundColor2" name="backgroundColor2" [value]="backgroundColor2"
+                 (input)="changeBackgroundColor2($event)">
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-between">
+      <div class="col align-self-center ">
+        <div class="form-group input-group-sm">
+          <label class="settings-global-p">Paragraph color: </label>
+          <input class="ml-2" type="color" id="paragraphColor" name="paragraphColor" [value]="paragraphColor"
+                 (input)="changeParagraphColor($event)">
+        </div>
+      </div>
+      <div class="col align-self-center">
+        <div class="form-group input-group-sm">
+          <label class="settings-global-p">Paragraph Size: </label>
+          <input class="ml-2" id="paragraphSize" name="paragraphSize" type="number" min="9" max="23"
+                 [value]="paragraphSize"
+                 (input)="changeParagraphSize($event)">
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-between">
+      <div class="col align-self-center ">
+        <div class="form-group input-group-sm">
+          <label class="settings-global-p">Line separator color: </label>
+          <input class="ml-2" type="color" id="lineSeparatorColor" name="lineSeparatorColor"
+                 [value]="lineSeparatorColor"
+                 (input)="changeLineSeparatorColor($event)">
+        </div>
+      </div>
+      <div class="col align-self-center">
+        <!--<div class="form-group input-group-sm">
+          <label class="settings-global-p">Paragraph Size: </label>
+          <input class="ml-2" id="paragraphSize" name="paragraphSize" type="number" min="9" max="23"
+                 [value]="paragraphSize"
+                 (input)="changeParagraphSize($event)">
+        </div>-->
+      </div>
     </div>
   </div>
-  <div class="form-group">
-    <div class="form-group input-group-sm">
-      <label class="settings-global-p">Background Color: </label>
-      <input class="ml-2" type="color" id="backgroundColor" name="backgroundColor" [value]="backgroundColor"(input)="changeBackgroundColor($event)">
-    </div>
-    <div class="form-group input-group-sm">
-      <label class="settings-global-p">Background2 Color: </label>
-      <input class="ml-2" type="color" id="backgroundColor2" name="backgroundColor2" [value]="backgroundColor2"(input)="changeBackgroundColor2($event)">
-    </div>
-    <div class="form-group input-group-sm">
-      <label class="settings-global-p">Line separator color: </label>
-      <input class="ml-2" type="color" id="lineSeparatorColor" name="lineSeparatorColor" [value]="lineSeparatorColor"(input)="changeLineSeparatorColor($event)">
-    </div>
-    <div class="form-group input-group-sm">
-      <label class="settings-global-p">Active List color: </label>
-      <input class="ml-2" type="color" id="activeListColor" name="activeListColor" [value]="activeListColor"(input)="changeActiveListColor($event)">
-    </div>
-    <div class="form-group input-group-sm">
-      <label class="settings-global-p">Active Text color: </label>
-      <input class="ml-2" type="color" id="activeTextColor" name="activeTextColor" [value]="activeTextColor"(input)="changeActiveTextColor($event)">
-    </div>
-    <div class="form-group input-group-sm">
-      <label class="settings-global-p">Slider bar color: </label>
-      <input class="ml-2" type="color" id="sliderBarColor" name="sliderBarColor" [value]="sliderBarColor"(input)="changeSliderBarColor($event)">
-    </div>
-    <div class="form-group input-group-sm">
-      <label class="settings-global-p">Slider Selection color: </label>
-      <input class="ml-2" type="color" id="sliderSelectionColor" name="sliderSelectionColor" [value]="sliderSelectionColor"(input)="changeSliderSelectionColor($event)">
-    </div>
-    <div class="form-group input-group-sm">
-      <label class="settings-global-p">Url color: </label>
-      <input class="ml-2" type="color" id="urlColor" name="urlColor" [value]="urlColor"(input)="changeUrlColor($event)">
-    </div>
-    <div class="form-group input-group-sm">
-      <label class="settings-global-p">Paragraph color: </label>
-      <input class="ml-2" type="color" id="paragraphColor" name="paragraphColor" [value]="paragraphColor"(input)="changeParagraphColor($event)">
-    </div>
-    <div class="form-group input-group-sm">
-      <label class="settings-global-p">Read color: </label>
-      <input class="ml-2" type="color" id="readColor" name="readColor" [value]="readColor"(input)="changeReadColor($event)">
-    </div>
-    <div class="form-group input-group-sm">
-      <label class="settings-global-p">Paragraph Size: </label>
-      <input class="ml-2" id="paragraphSize" name="paragraphSize"  type="number" min="9" max="23" [value]="paragraphSize" (input)="changeParagraphSize($event)">
-    </div>
-    <br>
+  <div class="settings-header">
+    <div class="settings-header-title">Navigation Settings</div>
+    <div class="settings-header-line"></div>
   </div>
-
-
+  <div class="group-themes">
+    <div class="row justify-content-between">
+      <div class="col align-self-center ">
+        <div class="form-group input-group-sm">
+          <label class="settings-global-p">Active List color: </label>
+          <input class="ml-2" type="color" id="activeListColor" name="activeListColor" [value]="activeListColor"
+                 (input)="changeActiveListColor($event)">
+        </div>
+      </div>
+      <div class="col align-self-center">
+        <div class="form-group input-group-sm">
+          <label class="settings-global-p">Active Text color: </label>
+          <input class="ml-2" type="color" id="activeTextColor" name="activeTextColor" [value]="activeTextColor"
+                 (input)="changeActiveTextColor($event)">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="settings-header">
+    <div class="settings-header-title">Grid view</div>
+    <div class="settings-header-line"></div>
+  </div>
+  <div class="group-themes">
+    <div class="row justify-content-between">
+      <div class="col align-self-center ">
+        <div class="form-group input-group-sm">
+          <label class="settings-global-p">Url color: </label>
+          <input class="ml-2" type="color" id="urlColor" name="urlColor" [value]="urlColor"
+                 (input)="changeUrlColor($event)">
+        </div>
+      </div>
+      <div class="col align-self-center">
+        <div class="form-group input-group-sm">
+          <label class="settings-global-p">Read color: </label>
+          <input class="ml-2" type="color" id="readColor" name="readColor" [value]="readColor"
+                 (input)="changeReadColor($event)">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="settings-header">
+    <div class="settings-header-title">Slider settings</div>
+    <div class="settings-header-line"></div>
+  </div>
+  <div class="group-themes">
+    <div class="row justify-content-between">
+      <div class="col align-self-center ">
+        <div class="form-group input-group-sm">
+          <label class="settings-global-p">Slider bar color: </label>
+          <input class="ml-2" type="color" id="sliderBarColor" name="sliderBarColor" [value]="sliderBarColor"
+                 (input)="changeSliderBarColor($event)">
+        </div>
+      </div>
+      <div class="col align-self-center">
+        <div class="form-group input-group-sm">
+          <label class="settings-global-p">Slider Selection color: </label>
+          <input class="ml-2" type="color" id="sliderSelectionColor" name="sliderSelectionColor"
+                 [value]="sliderSelectionColor" (input)="changeSliderSelectionColor($event)">
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+</div>
 
 
 

@@ -5,15 +5,16 @@ import {Setting} from "../../shared/model/setting.model";
 import {LabelType, Options} from "@angular-slider/ngx-slider";
 
 @Component({
-  selector: 'app-speed-component',
-  templateUrl: './speed.component.html',
-  styleUrls: ['./speed.component.scss']
+  selector: 'app-slider-component',
+  templateUrl: './slider.component.html',
+  styleUrls: ['./slider.component.scss']
 })
 
-export class SpeedComponent implements OnInit {
+export class SliderComponent implements OnInit {
 
   settingTemp: Setting;
   value: number = 0;
+  maxTicketShow: number;
   options: Options = {
     ceil: 100,
     tickStep: 10,
@@ -75,10 +76,15 @@ export class SpeedComponent implements OnInit {
   ngOnInit() {
     this.settingTemp = this.settingService.settingTemp;
     this.value = this.settingTemp.speed;
+    this.maxTicketShow = this.settingTemp.maxTicketShow;
   }
 
   changeEnd($event) {
     this.settingTemp.speed = this.value;
+    this.settingService.settingTemp = this.settingTemp;
+  }
+  changeEndMaxTicket($event) {
+    this.settingTemp.maxTicketShow = $event.target.value <= 0 ? 1 : $event.target.value;
     this.settingService.settingTemp = this.settingTemp;
   }
 }

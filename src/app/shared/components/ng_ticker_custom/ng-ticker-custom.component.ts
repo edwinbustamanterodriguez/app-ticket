@@ -35,7 +35,7 @@ export class NgTickerCustomComponent implements OnInit, OnChanges {
    */
   @Input() direction = 'left';
   /**
-   * Defines speed of ticker content. [time in seconds, miliseconds]
+   * Defines slider_settings of ticker content. [time in seconds, miliseconds]
    * type: time in string
    */
   @Input() speed = '10s';

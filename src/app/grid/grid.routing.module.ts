@@ -8,7 +8,7 @@ const gridRoutes: Routes = [
     path: 'grid',
     component: GridComponent,
     /*children: [
-      { path: 'speed', component: Storage_settingComponent},
+      { path: 'slider_settings', component: Storage_settingComponent},
       { path: 'other', component: OtherComponent},
       { path: 'settings', component: Storage_settingComponent}
     ]*/

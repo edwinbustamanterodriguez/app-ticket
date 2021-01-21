@@ -5,7 +5,7 @@ import {SettingsRoutingModule} from './settings.routing.module';
 
 import {SettingsComponent} from './settings.component';
 import {SharedModule} from '../shared/shared.module';
-import {SpeedComponent} from "./speed/speed.component";
+import {SliderComponent} from "./slider_settings/slider.component";
 import {OtherComponent} from "./other/other.component";
 import {StorageSettingComponent} from "./storage/storage_setting.component";
 import {ColorSchemeComponent} from "./scheme/color_scheme.component";
@@ -13,7 +13,7 @@ import {ColorSchemeComponent} from "./scheme/color_scheme.component";
 @NgModule({
   imports: [CommonModule, SharedModule, SettingsRoutingModule],
   declarations: [SettingsComponent,
-    SpeedComponent,
+    SliderComponent,
     StorageSettingComponent,
     ColorSchemeComponent,
     OtherComponent,

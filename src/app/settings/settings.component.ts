@@ -23,8 +23,8 @@ export class SettingsComponent implements OnInit {
     let settings: Setting = this.settingService.getSettings();
     this.settingService.settingTemp = settings;
     console.log(this.settingService.settingTemp);
-    // Load speed by default.
-    this.router.navigate(['/settings/speed']);
+    // Load slider_settings by default.
+    this.router.navigate(['/settings/slider']);
   }
 
   save(): void {
